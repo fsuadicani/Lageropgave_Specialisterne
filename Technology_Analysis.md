@@ -1,29 +1,21 @@
 Design analysis of different technologies:
 
 React:
-    Advantages:
-    Disadvantages:
+    -   Virtual DOM with good performance 4/5
+    -   Ecosystem with extensive libraries and community support 5/5
+    -   Scalable and future proof in large enterprise apps
 
 Angular:
-    Advantages:
-    Disadvantages:
+    -   AOT Compilation, change detection to provide solid performance 4/5
+    -   Strong opinionated structure
+    -   Built-in modules
+    -   Long term support
 
 Vue.js:
-    Advantages:
-    Disadvantages:
+    -   Efficient reactive system
+    -   Lightweight virtual DOM deliver fast runtime speed 4.5/5
 
-Solid.js:
-    Advantages:
-    Disadvantages:
-
-Astro:
-    Advantages:
-    Disadvantages:
-
-Svelte:
-    Advantages:
-    Disadvantages:
 
 Sources:
 1. [top_7_frontend](https://talent500.com/blog/top-frontend-frameworks-2025/)
-2. 
+2. [back_end_frameworks](https://radixweb.com/blog/best-backend-frameworks)
