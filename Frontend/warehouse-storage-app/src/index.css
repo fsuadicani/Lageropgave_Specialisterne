@@ -28,7 +28,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   padding: 0;
-  flex-direction: column
+  flex-direction: column;
+  background-color: #eacb02;
 }
 
 h1 {
@@ -72,6 +73,10 @@ button:focus-visible {
     background-color: #f9f9f9;
     margin: 5px;
     margin-left: 90%;
+    width: 5%;
+  }
+  button:hover {
+    background-color: #e0e0e0;
   }
   div.App
   {
@@ -88,10 +93,33 @@ button:focus-visible {
   .form-actions
   {
     background-color: orange;
-    width: 50%;
-    height: 12%;
     padding: 5px;
-    display: inline-block;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-left: 70%;
+    align-items: center;
+  }
+
+  .form-actions .remember {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .form-actions a {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .form-actions button {
+    width: auto;
+    margin: 0;
+    margin-left: 0;
+    padding: 0.45em 0.9em;
+    line-height: 1;
   }
 
   .login-form
@@ -115,7 +143,7 @@ button:focus-visible {
 
   #username {
     margin-top: 2%;
-    margin-left: 50%;
+    margin-left: 70%;
   }
 
   #username:focus, #password:focus
@@ -123,4 +151,5 @@ button:focus-visible {
     outline: 1px solid #646cff;
     outline-offset: 2px;
   }
+
 }

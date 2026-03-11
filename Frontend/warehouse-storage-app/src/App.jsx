@@ -13,12 +13,9 @@ function App() {
           <input type="checkbox" id="remember" name="remember" /> Remember me
         </label>
         <a href="#">Forgot password?</a>
+        <button type="submit">Login</button>
       </div>
-
-      <button type="submit">Login</button>
     </form>
-
-    <p>Don’t have an account? <a href="#">Sign up</a></p>
     </div>
   );
 }
