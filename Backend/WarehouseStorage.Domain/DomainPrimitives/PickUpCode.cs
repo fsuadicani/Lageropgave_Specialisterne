@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class PickUpCode
     {
-        private readonly string value;
+        public readonly string value;
 
         public PickUpCode(string code)
         {
@@ -27,7 +27,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern))
                 throw new ArgumentException("Pick-up code cannot contain special characters.");
         }
-
-        public override string ToString() => value;
     }
 }

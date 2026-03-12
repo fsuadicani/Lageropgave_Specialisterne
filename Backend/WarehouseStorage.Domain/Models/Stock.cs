@@ -8,11 +8,18 @@ namespace WarehouseStorage.Domain.Models
 {
     public class Stock
     {
-        public Guid? Id { get; }
-        public StockLocation InHouseLocation { get; }
-        public Quantity Quantity { get; }
-        public Price LocalPrice { get; }
-        public Currency LocalCurrency { get; }
+        public Guid? Id { get; private set;}
+        public StockLocation InHouseLocation { get; private set;}
+        public Quantity Quantity { get; private set;}
+        public Price LocalPrice { get; private set;}
+        public Currency LocalCurrency { get; private set;}
+        private Stock() { } // EF Core
+
+        //Relationsships
+        public Guid LocationId  { get; set;}
+        public Location Location { get; set; }
+
+        public Product Product { get; set; }
 
         public Stock(StockLocation location, Quantity quantity, Price price, Currency currency, Guid? id)
         {

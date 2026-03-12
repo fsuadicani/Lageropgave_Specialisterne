@@ -9,12 +9,20 @@ namespace WarehouseStorage.Domain.Models
 {
     public class Transit
     {
-        public Guid? Id { get; }
-        public TransitNumber TransitNumber { get; }
-        public PickUpCode PickUpCode { get; }
-        public Coordinates GpsLocation { get; }
-        public CompanyName Distributor { get; }
-        public DeliveryStatus DeliveryStatus { get; }
+        public Guid? Id { get; private set;}
+        public TransitNumber TransitNumber { get; private set;}
+        public PickUpCode PickUpCode { get; private set;}
+        public Coordinates GpsLocation { get; private set;}
+        public CompanyName Distributor { get; private set;}
+        public DeliveryStatus DeliveryStatus { get; private set;}
+        private Transit() { } // EF Core
+
+        //Relationsships
+        public ICollection<Location> StockLocations  { get; set; }
+
+        public Warehouse Destination { get; set; }
+
+        public Warehouse Origin { get; set; }
 
         public Transit(TransitNumber transitNumber, PickUpCode pickUpCode, Coordinates coordinates, CompanyName companyName, DeliveryStatus deliveryStatus, Guid? id)
         {

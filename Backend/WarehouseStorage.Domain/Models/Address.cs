@@ -9,13 +9,14 @@ namespace WarehouseStorage.Domain.Models
 {
     public class Address
     {
-        public Guid? Id {get; }
-        public City City { get; }
+        public Guid? Id {get; private set;}
+        public City City { get; private set;}
 
-        public StreetName Street { get; }
-        public StreetNumber StreetNumber { get; }
-        public ZipCode ZipCode { get; }
+        public StreetName Street { get; private set;}
+        public StreetNumber StreetNumber { get; private set;}
+        public ZipCode ZipCode { get; private set;}
 
+        private Address() { } // EF Core
         public Address(City city, StreetName streetName, StreetNumber streetNumber, ZipCode zipCode, Guid? guid)
         {
             Id = guid;

@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class City
     {
-        private readonly string value;
+        public readonly string value;
 
         public City(string city)
         {
@@ -28,7 +28,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern))
                 throw new ArgumentException("City name contains invalid characters.");
         }
-
-        public override string ToString() => value;
     }
 }

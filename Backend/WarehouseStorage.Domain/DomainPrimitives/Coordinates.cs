@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class Coordinates
     {
-        private readonly string value;
+        public readonly string value;
 
         public Coordinates(string coordinates)
         {
@@ -31,7 +31,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
                 throw new ArgumentException("Coordinates must follow standard geographic format (e.g., 40°45'11\"N, 73°58'59\"W).");
         }
-
-        public override string ToString() => value;
     }
 }

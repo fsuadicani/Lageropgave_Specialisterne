@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class Currency
     {
-        private readonly string value;
+        public readonly string value;
 
         public Currency(string currency)
         {
@@ -24,7 +24,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern))
                 throw new ArgumentException("Currency must be exactly 3 letters (ISO 4217 format).");
         }
-
-        public override string ToString() => value;
     }
 }

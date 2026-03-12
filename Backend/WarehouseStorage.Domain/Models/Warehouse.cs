@@ -7,7 +7,13 @@ namespace WarehouseStorage.Domain.Models
 {
     public class Warehouse
     {
-        public Guid? Id { get; }
+        public Guid? Id { get; private set; }
+        private Warehouse() { } // EF Core
+
+        //Relationsships
+        public Address Address { get; set; }
+
+        public ICollection<Location> StockLocations  { get; set; }
 
         public Warehouse(Guid? id)
         {

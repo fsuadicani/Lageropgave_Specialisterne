@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class StreetNumber
     {
-        private readonly string value;
+        public readonly string value;
 
         public StreetNumber(string number)
         {
@@ -27,7 +27,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern))
                 throw new ArgumentException("Street number cannot contain special characters.");
         }
-
-        public override string ToString() => value;
     }
 }

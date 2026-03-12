@@ -5,7 +5,7 @@ namespace WarehouseStorage.Domain.DomainPrimitives
 {
     public class StockLocation
     {
-        private readonly string value;
+        public readonly string value;
 
         public StockLocation(string location)
         {
@@ -27,7 +27,5 @@ namespace WarehouseStorage.Domain.DomainPrimitives
             if (!Regex.IsMatch(value, pattern))
                 throw new ArgumentException("Location cannot contain special characters.");
         }
-
-        public override string ToString() => value;
     }
 }
