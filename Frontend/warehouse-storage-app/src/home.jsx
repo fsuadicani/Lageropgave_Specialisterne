@@ -1,4 +1,5 @@
 import './css/home.css'
+import './Graphs.jsx'
 function Home() {
     return (
         <div className="home">
@@ -12,11 +13,8 @@ function Home() {
             </div>
             &nbsp;
             <div className="home-container">
-                <img 
-                    src="./assets/react.svg" 
-                    alt="Warehouse Storage"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                />
+                <div id="top"></div>
+                <div id="chart-container"></div>
             </div>
         </div>
     );

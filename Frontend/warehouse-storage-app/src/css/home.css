@@ -1,7 +1,8 @@
 .home {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  min-height: 5vh;
+  min-height: 100vh;
   background-color: orange;
 }
 
@@ -14,12 +15,15 @@
 
 .home-nav {
   width: 100%;
+  background-color: orange;
+  z-index: 10;
 }
 
 .home-container {
     width: 100%;
     background-color: yellow;
-    height: 100%;
+    flex: 1;
+    overflow: auto;
 }
 
 .home-nav ul {
