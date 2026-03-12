@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Login({ onLogin }) {
+function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -78,7 +78,8 @@ function Login({ onLogin }) {
       const devUsername = (import.meta.env.VITE_DEV_LOGIN_USERNAME ?? '').trim();
       const devPassword = (import.meta.env.VITE_DEV_LOGIN_PASSWORD ?? '').trim();
 
-      if (normalizedUsername === devUsername && normalizedPassword === devPassword && devUsername && devPassword) {        setErrorMessage('');
+      if (normalizedUsername === devUsername && normalizedPassword === devPassword && devUsername && devPassword) {
+        setErrorMessage('');
         setIsAuthenticated(true);
 
         const session = {
@@ -132,7 +133,8 @@ function Login({ onLogin }) {
         username: data.username ?? normalizedUsername,
         token: data.token,
         loggedInAt: new Date().toISOString(),
-      };      setErrorMessage('');
+      };
+      setErrorMessage('');
       setIsAuthenticated(true);
 
       persistSession(session);
@@ -159,56 +161,58 @@ function Login({ onLogin }) {
     }
   };
 
-
   return (
-      <browserRouter>
-    <form className="login-form" onSubmit={handleSubmit}>
-      <div className="login-grid">
-        <div className="field-column">
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter your username"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <browserRouter>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="login-grid">
+          <div className="field-column">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter your username"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-          <div className="form-meta">
-            <label className="remember">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                checked={remember}
-                onChange={(e) => setRemember(e.target.checked)}
-              /> Remember me
-            </label>
-            <a href="#">Forgot password?</a>
+            <div className="form-meta">
+              <label className="remember">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  name="remember"
+                  checked={remember}
+                  onChange={(e) => setRemember(e.target.checked)}
+                />{' '}
+                Remember me
+              </label>
+              <a href="#">Forgot password?</a>
+            </div>
+          </div>
+
+          <div className="field-column field-column-password">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button className="login-submit" type="submit">
+              Login
+            </button>
           </div>
         </div>
 
-        <div className="field-column field-column-password">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button className="login-submit" type="submit">Login</button>
-        </div>
-      </div>
-
-      {isAuthenticated && <p className="login-success">Login successful.</p>}
-      {errorMessage && <p className="login-error">{errorMessage}</p>}
-    </form>
-      </browserRouter>
+        {isAuthenticated && <p className="login-success">Login successful.</p>}
+        {errorMessage && <p className="login-error">{errorMessage}</p>}
+      </form>
+    </browserRouter>
   );
 }
 
-export default Login;
+export default LoginPage;

@@ -12,7 +12,7 @@ function MenuLayout() {
           <NavLink to="/employees">Manage Employees</NavLink>
         </div>
         <div>
-          <NavLink to="/logout">Log Out</NavLink>
+          <NavLink to="/login">Log Out</NavLink>
         </div>
       </div>
 
