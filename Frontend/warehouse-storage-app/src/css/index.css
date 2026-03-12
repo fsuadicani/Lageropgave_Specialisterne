@@ -203,26 +203,27 @@ button:focus-visible {
     text-align: right;
   }
 
-  @media (max-width: 900px) {
-    .login-grid {
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+}
 
-    .field-column,
-    .field-column-password {
-      width: 100%;
-      align-items: flex-start;
-    }
+@media (max-width: 900px) {
+  .login-grid {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-    #username,
-    #password {
-      min-width: 180px;
-      width: min(260px, 100%);
-    }
+  .field-column,
+  .field-column-password {
+    width: 100%;
+    align-items: flex-start;
+  }
 
-    .form-meta {
-      justify-content: flex-end;
-    }
+  #username,
+  #password {
+    min-width: 180px;
+    width: min(260px, 100%);
+  }
+
+  .form-meta {
+    justify-content: flex-end;
   }
 }

@@ -10,15 +10,14 @@ function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const normalizedUsername = username;
-    const normalizedPassword = password;
+    const normalizedUsername = username.trim();
+    const normalizedPassword = password.trim();
     // TODO: Remove DEV-only login fallback before release and rely only on server-side authentication.
     if (DEV_ONLY_LOGIN_ENABLED) {
       const devUsername = (import.meta.env.VITE_DEV_LOGIN_USERNAME ?? '').trim();
       const devPassword = (import.meta.env.VITE_DEV_LOGIN_PASSWORD ?? '').trim();
 
-      if (normalizedUsername === devUsername && normalizedPassword === devPassword && devUsername && devPassword) {
-        setErrorMessage('');
+      if (normalizedUsername === devUsername && normalizedPassword === devPassword && devUsername && devPassword) {        setErrorMessage('');
         setIsAuthenticated(true);
 
         const session = {
