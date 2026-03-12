@@ -27,14 +27,12 @@
 }
 
 .home-nav ul {
-  flex: 1 0 21%;
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   width: 100%;
 }
-
 .home-nav ul li {
   float: left;
 }
