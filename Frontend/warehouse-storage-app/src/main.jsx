@@ -9,6 +9,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Home/>
   </StrictMode>,
-)
+);
 
 // change Home to APP after design of home page is done
