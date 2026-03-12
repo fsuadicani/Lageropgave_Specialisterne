@@ -2,9 +2,9 @@ import '../css/warehouse.css';
 
 function WarehousePage() {
   const warehouses = [
-    { by: 'Odense', postnummer: '5000', gade: 'Flakhaven', husnummer: '2' },
-    { by: 'Kobenhavn', postnummer: '1553', gade: 'Radhuspladsen', husnummer: '1' },
-    { by: 'Aarhus', postnummer: '8000', gade: 'Banegardspladsen', husnummer: '1' },
+    { name: 'Skruetrakker', inhouseLocation: 'A1-14', localPrice: '149.00', localCurrency: 'DKK', inStock: 42 },
+    { name: 'Hammer', inhouseLocation: 'B2-07', localPrice: '89.50', localCurrency: 'DKK', inStock: 18 },
+    { name: 'Boremaskine', inhouseLocation: 'C3-21', localPrice: '799.00', localCurrency: 'DKK', inStock: 7 },
   ];
 
 
@@ -27,23 +27,25 @@ function WarehousePage() {
         <table>
           <thead>
             <tr>
-              <th>By</th>
-              <th>Postnummer</th>
-              <th>Gade</th>
-              <th>Husnummer</th>
+              <th>Name</th>
+              <th>Inhouse Location</th>
+              <th>Local Price</th>
+              <th>Local Currency</th>
+              <th>In Stock</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {warehouses.map((warehouse) => (
-              <tr key={`${warehouse.by}-${warehouse.postnummer}-${warehouse.gade}-${warehouse.husnummer}`}>
-                <td>{warehouse.by}</td>
-                <td>{warehouse.postnummer}</td>
-                <td>{warehouse.gade}</td>
-                <td>{warehouse.husnummer}</td>
+              <tr key={`${warehouse.name}-${warehouse.inhouseLocation}`}>
+                <td>{warehouse.name}</td>
+                <td>{warehouse.inhouseLocation}</td>
+                <td>{warehouse.localPrice}</td>
+                <td>{warehouse.localCurrency}</td>
+                <td>{warehouse.inStock}</td>
                 <td className="row-actions">
                   <button type="button">Edit</button>
-                  <button type="button">Delete</button>
+                  <button type="button">Order</button>
                 </td>
               </tr>
             ))}

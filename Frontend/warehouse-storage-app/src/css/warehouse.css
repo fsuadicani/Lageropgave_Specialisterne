@@ -43,7 +43,9 @@ body {
 
 .content {
     grid-area: main;
-    padding: 10px
+    padding-top: 10px;
+    margin-left: 5%;
+
 }
 
 
@@ -60,7 +62,6 @@ div.tablecontainer {
 table {
     border-collapse: collapse;
     width: 90%;
-    margin-left: 0%;
 }
 
 table, th, td {
