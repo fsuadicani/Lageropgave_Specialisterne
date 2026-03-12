@@ -1,13 +1,33 @@
-function Home() {
+import React from 'react';import './css/home.css'
+import Graphs from './Graphs.jsx'
+
+function Home({ onLogout }) {
+    const handleLogout = () => {
+        localStorage.removeItem('warehouseAuth');
+
+        if (typeof onLogout === 'function') {
+            onLogout();
+        }
+
+        window.location.hash = '#/login';
+    };
+
     return (
         <div className="home">
-            <h1>Welcome to the Warehouse Storage App</h1>
-            <p>Manage your warehouse storage efficiently and effectively.</p>
+            <div className="home-nav">
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#warehouses">Warehouses</a></li>
+                <li><a href="#transits">Transits</a></li>
+                <li className="logout-item"><button className="logout-button" onClick={handleLogout}>Logout</button></li>
+            </ul>
+            </div>
+            &nbsp;
             <div className="home-container">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/022/935/143/small/large-warehouse-for-storage-of-goods-racks-shelves-goods-background-generative-ai-photo.jpg" alt="Warehouse Storage" />
+                <Graphs />
             </div>
         </div>
     );
 }
 
-export default Home;
+export default Home

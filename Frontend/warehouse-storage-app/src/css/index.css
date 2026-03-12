@@ -35,7 +35,6 @@ body, .container {
 h1 {
   font-size: 2.2em;
   line-height: 1.5;
-  margin: 0;
   text-align: center;
   width: 50%;
   margin: auto;
@@ -50,17 +49,13 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px solid #646cff;
   outline-offset: 2px;
 }
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -165,7 +160,7 @@ button:focus-visible {
   #username, #password
   {
     background-color: #eacb02;
-    color: #fff;
+    color: #1a1a1a;
     padding: 4px 6px;
     border-radius: 4px;
     font-weight: bold;
@@ -208,26 +203,27 @@ button:focus-visible {
     text-align: right;
   }
 
-  @media (max-width: 900px) {
-    .login-grid {
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+}
 
-    .field-column,
-    .field-column-password {
-      width: 100%;
-      align-items: flex-start;
-    }
+@media (max-width: 900px) {
+  .login-grid {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-    #username,
-    #password {
-      min-width: 180px;
-      width: min(260px, 100%);
-    }
+  .field-column,
+  .field-column-password {
+    width: 100%;
+    align-items: flex-start;
+  }
 
-    .form-meta {
-      justify-content: flex-end;
-    }
+  #username,
+  #password {
+    min-width: 180px;
+    width: min(260px, 100%);
+  }
+
+  .form-meta {
+    justify-content: flex-end;
   }
 }
