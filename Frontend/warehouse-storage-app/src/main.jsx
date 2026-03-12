@@ -2,10 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './css/index.css'
 import App from './App.jsx'
+import Home from './Home.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
     <Home/>
   </StrictMode>,
 )
+
+// change Home to APP after design of home page is done
