@@ -64,15 +64,16 @@ namespace WarehouseStorage.Services.Factories
         public static Stock CreateStock(StockDTO stock)
         {
             var stockId = stock.Id ?? Guid.NewGuid();
+            var localPrice = stock.LocalPrice <= 0 ? 1m : stock.LocalPrice;
+            var localCurrency = string.IsNullOrWhiteSpace(stock.LocalCurrency) ? "USD" : stock.LocalCurrency;
 
             return new Stock(
                 DomainFactory.CreateStockLocation(stock.InHouseLocation),
                 DomainFactory.CreateQuantity(stock.Quantity),
-                DomainFactory.CreatePrice(stock.LocalPrice),
-                DomainFactory.CreateCurrency(stock.LocalCurrency),
+                DomainFactory.CreatePrice(localPrice),
+                DomainFactory.CreateCurrency(localCurrency),
                 stockId);
         }
-
 
         public static Warehouse CreateWarehouse(WarehouseDTO warehouse)
         {
