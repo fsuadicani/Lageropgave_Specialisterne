@@ -22,7 +22,7 @@ namespace WarehouseStorage.Services.Factories
                     DomainFactory.CreateProductNumber(product.Number),
                     DomainFactory.CreatePrice(defaultPrice),
                     DomainFactory.CreateCurrency(currencyCode),
-                    Guid.NewGuid());
+                    null);
             }
             return products;
         }       
@@ -30,7 +30,7 @@ namespace WarehouseStorage.Services.Factories
         
         public static Product CreateProduct(ProductDTO product)
         {
-            var productId = product.Id ?? Guid.NewGuid();
+            var productId = (Guid?)null;
 
             var currencyCode = string.IsNullOrWhiteSpace(product.DefaultCurrency) ? "USD" : product.DefaultCurrency;
             var defaultPrice = product.DefaultPrice <= 0 ? 1m : product.DefaultPrice;
@@ -46,7 +46,7 @@ namespace WarehouseStorage.Services.Factories
 
         public static Transit CreateTransit(TransitDTO transit)
         {
-            var transitId = transit.Id ?? Guid.NewGuid();
+            var transitId = (Guid?)null;
             var deliveryStatus = Enum.TryParse<DeliveryStatus>(transit.DeliveryStatus, ignoreCase: true, out var parsed)
                 ? parsed
                 : DeliveryStatus.WAITING;
@@ -63,7 +63,7 @@ namespace WarehouseStorage.Services.Factories
 
         public static Stock CreateStock(StockDTO stock)
         {
-            var stockId = stock.Id ?? Guid.NewGuid();
+            var stockId = (Guid?)null;
             var localPrice = stock.LocalPrice <= 0 ? 1m : stock.LocalPrice;
             var localCurrency = string.IsNullOrWhiteSpace(stock.LocalCurrency) ? "USD" : stock.LocalCurrency;
 
@@ -77,8 +77,8 @@ namespace WarehouseStorage.Services.Factories
 
         public static Warehouse CreateWarehouse(WarehouseDTO warehouse)
         {
-            var warehouseId = warehouse.Id ?? Guid.NewGuid();
-            var addressId = Guid.NewGuid();
+            var warehouseId = (Guid?)null;
+            var addressId = (Guid?)null;
 
             var createdWarehouse = new Warehouse(warehouseId)
             {
