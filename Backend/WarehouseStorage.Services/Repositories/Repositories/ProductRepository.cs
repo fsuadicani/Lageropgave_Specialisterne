@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseStorage.Domain.Models;
+using WarehouseStorage.Services.Repositories.Interfaces;
 
 public class ProductRepository : IProductRepository
 {

@@ -1,10 +1,12 @@
 using WarehouseStorage.Domain.Models;
 
-public interface IProductRepository
+namespace WarehouseStorage.Services.Repositories.Interfaces
 {
-    Task<Product?> GetById(Guid id);
-    Task<Product[]> GetAll();
-    Task<Product> Add(Product product);
-    Task Update(Product product);
-    Task Delete(Guid id);
+    public interface IProductRepository
+    {    Task<Product?> GetById(Guid id);
+        Task<Product[]> GetAll();
+        Task<Product> Add(Product product);
+        Task Update(Product product);
+        Task Delete(Guid id);
+    }
 }
