@@ -9,6 +9,8 @@ public class WarehouseDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<Transit> Transits { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder); // IMPORTANT
