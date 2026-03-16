@@ -2,6 +2,7 @@ using BCrypt.Net;
 using WarehouseStorage.Domain.Enums;
 using WarehouseStorage.Domain.Exceptions;
 using WarehouseStorage.Domain.Models;
+using WarehouseStorage.Services.Repositories.Interfaces;
 using WarehouseStorage.Services.Security.Interfaces;
 
 namespace WarehouseStorage.Services.Security;
@@ -19,13 +20,13 @@ public class AuthService
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
-        var existing = await _userRepository.GetByUsernameAsync(request.username);
+        var existing = await _userRepository.GetByUsernameAsync(request.Username);
         if (existing != null)
             throw new UserAlreadyExistsException("User already exists");
 
         var user = new ApplicationUser
         {
-            UserName = request.username,
+            UserName = request.Username,
         };
 
         await _userRepository.AddAsync(user, request.Password);
@@ -38,14 +39,16 @@ public class AuthService
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)
     {
-        var user = await _userRepository.GetByUsernameAsync(request.username);
+        var user = await _userRepository.GetByUsernameAsync(request.Username);
+        
+        // Always perform hash verification to prevent timing-based username enumeration
+        var hashToVerify = user?.PasswordHash ?? "$2a$12$000000000000000000000uDummyHashForConstantTimeComparison";
+        var passwordValid = BCrypt.Net.BCrypt.Verify(request.Password, hashToVerify);
 
-        if (user == null ||
-            !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        if (user == null || !passwordValid)
             throw new InvalidCredentialsException("Invalid credentials");
 
         var token = await _jwt.GenerateTokenAsync(user);
 
         return new AuthResponse(token);
-    }
-}
+    }}

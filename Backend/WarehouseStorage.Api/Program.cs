@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WarehouseStorage.Domain.Enums;
 using WarehouseStorage.Domain.Models;
+using WarehouseStorage.Infrastructure;
 using WarehouseStorage.Services;
 using WarehouseStorage.Services.Security;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddUserSecrets<Program>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -18,9 +17,8 @@ builder.Services.AddControllers();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Configuration.AddUserSecrets(typeof(ConnectionString).Assembly, optional: true, reloadOnChange: true);
+    builder.Configuration.AddUserSecrets<Program>(optional: true, reloadOnChange: true);
 }
-
 // JWT Token Setup
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
@@ -77,7 +75,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 
+app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Run();
+app.MapControllers();
