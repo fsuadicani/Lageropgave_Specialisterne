@@ -1,8 +1,6 @@
-# Lageropgave_Specialisterne
+# Lageropgave_SpecialisterneMake sure you have set the following with dotnet user-secrets set "key" "value"
 
-
-# Api Backend Archtecture
-With CoPilot
+# Api Backend ArchitectureWith CoPilot
 
 warehouse-storage-api/
 │

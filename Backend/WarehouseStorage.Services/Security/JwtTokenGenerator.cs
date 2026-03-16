@@ -7,8 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.Services.Security.Interfaces;
 
-public class JwtTokenGenerator : IJwtTokenGenerator
-{
+namespace WarehouseStorage.Services.Security;
+
+public class JwtTokenGenerator : IJwtTokenGenerator{
     private readonly IConfiguration _config;
 
     private readonly UserManager<ApplicationUser> _userManager;
@@ -19,10 +20,16 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _userManager = userManager;
     }
 
-    public async Task<string> GenerateTokenAsync(ApplicationUser user)
-    {
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+    public async Task<string> GenerateTokenAsync(ApplicationUser user){
+            var jwtKey = _config["Jwt:Key"] 
+                ?? throw new InvalidOperationException("JWT key is not configured.");
+            
+            if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
+                throw new InvalidOperationException("JWT key must be at least 256 bits (32 bytes).");
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtKey));            
+                Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
 
         var credentials = new SigningCredentials(
             key,
