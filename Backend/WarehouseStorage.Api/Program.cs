@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
+// Add User Secrets for development environment
+builder.Configuration.AddUserSecrets<Program>();
 // JWT Token Setup
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
