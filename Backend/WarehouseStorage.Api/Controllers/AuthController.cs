@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using WarehouseStorage.Domain.Exceptions;
@@ -22,6 +23,7 @@ namespace WarehouseStorage.Api.Controllers
             _authService = authService;
         }
 
+        [Authorize]
         [HttpGet("Ping")]
         public ActionResult Ping()
         {

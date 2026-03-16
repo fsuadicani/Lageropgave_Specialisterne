@@ -1,4 +1,5 @@
 using BCrypt.Net;
+using Microsoft.AspNetCore.Identity;
 using WarehouseStorage.Domain.Enums;
 using WarehouseStorage.Domain.Exceptions;
 using WarehouseStorage.Domain.Models;
@@ -10,11 +11,13 @@ public class AuthService
     private readonly IUserRepository _userRepository;
     private readonly IJwtTokenGenerator _jwt;
 
-    public AuthService(IUserRepository userRepository,
-                       IJwtTokenGenerator jwt)
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public AuthService(IUserRepository userRepository, IJwtTokenGenerator jwt, UserManager<ApplicationUser> userManager)
     {
         _userRepository = userRepository;
         _jwt = jwt;
+        _userManager = userManager;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
@@ -38,10 +41,9 @@ public class AuthService
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)
     {
-        var user = await _userRepository.GetByUsernameAsync(request.username);
+        ApplicationUser? user = await _userRepository.GetByUsernameAsync(request.username);
 
-        if (user == null ||
-            !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             throw new InvalidCredentialsException("Invalid credentials");
 
         var token = await _jwt.GenerateTokenAsync(user);

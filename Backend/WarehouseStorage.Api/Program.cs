@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,22 +19,36 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 // JWT Token Setup
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        options.TokenValidationParameters = new TokenValidationParameters
+        
+        ValidateIssuer = true,
+        ValidIssuer = "WarehouseStorage",
+        ValidateAudience = true,
+        ValidAudience = "WarehouseStorage",
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+        )
+    };
+    options.MapInboundClaims = false;
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
-            )
-        };
-    });
+            Debug.WriteLine(context.Exception);
+            return Task.CompletedTask;
+        }
+    };
+});
 
 //Build the different policies for access to Endpoints
 builder.Services.AddAuthorizationBuilder()
@@ -63,16 +79,14 @@ using (var scope = app.Services.CreateScope())
     await roleSeeder.SeedRolesAsync();
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseRouting();
+if (!app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
-app.MapControllers();
-
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

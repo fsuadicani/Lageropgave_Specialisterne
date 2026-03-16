@@ -41,6 +41,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         }
 
         var token = new JwtSecurityToken(
+            issuer: "WarehouseStorage",
+            audience: "WarehouseStorage",
             claims: claims,
             expires: DateTime.UtcNow.AddHours(2),
             signingCredentials: credentials);
