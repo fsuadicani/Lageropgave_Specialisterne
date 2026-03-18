@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseStorage.DTOs.DataTransferObjects;
 using WarehouseStorage.Services.Factories;
+using WarehouseStorage.Services.Repositories.Repositories;
 
 namespace WarehouseStorage.Api.Controllers
 {

@@ -2,53 +2,56 @@ using Microsoft.EntityFrameworkCore;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.Services.Repositories.Interfaces;
 
-public class WarehouseRepository : IWarehouse
+namespace WarehouseStorage.Services.Repositories.Repositories
 {
-    private readonly WarehouseDbContext _context;
-
-    public WarehouseRepository(WarehouseDbContext context)
+    public class WarehouseRepository : IWarehouse
     {
-        _context = context;
-    }
+        private readonly WarehouseDbContext _context;
 
-    public async Task<Warehouse?> GetById(Guid id)
-    {
-        return await _context.Warehouses.FindAsync(id);
-    }
-
-    public async Task<Warehouse[]> GetAll(int skip = 0, int take = 100)
-    {
-      return await _context.Warehouses
-            .AsNoTracking()
-            .Skip(skip)
-            .Take(take)
-            .ToArrayAsync();
-    }
-
-    public async Task<Warehouse> Add(Warehouse warehouse)
-    {
-        _context.Warehouses.Add(warehouse);
-        await _context.SaveChangesAsync();
-        return warehouse;
-    }
-
-    public async Task Update(Warehouse warehouse)
-    {
-        if (warehouse.Id == Guid.Empty)
+        public WarehouseRepository(WarehouseDbContext context)
         {
-            throw new ArgumentException("Warehouse ID cannot be empty for update.");
+            _context = context;
         }
-        _context.Warehouses.Update(warehouse);
-        await _context.SaveChangesAsync();
-    }
 
-    public async Task Delete(Guid id)
-    {
-        var warehouse = await _context.Warehouses.FindAsync(id);
-        if (warehouse != null)
+        public async Task<Warehouse?> GetById(Guid id)
         {
-            _context.Warehouses.Remove(warehouse);
+            return await _context.Warehouses.FindAsync(id);
+        }
+
+        public async Task<Warehouse[]> GetAll(int skip = 0, int take = 100)
+        {
+        return await _context.Warehouses
+                .AsNoTracking()
+                .Skip(skip)
+                .Take(take)
+                .ToArrayAsync();
+        }
+
+        public async Task<Warehouse> Add(Warehouse warehouse)
+        {
+            _context.Warehouses.Add(warehouse);
             await _context.SaveChangesAsync();
+            return warehouse;
+        }
+
+        public async Task Update(Warehouse warehouse)
+        {
+            if (warehouse.Id == Guid.Empty)
+            {
+                throw new ArgumentException("Warehouse ID cannot be empty for update.");
+            }
+            _context.Warehouses.Update(warehouse);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(Guid id)
+        {
+            var warehouse = await _context.Warehouses.FindAsync(id);
+            if (warehouse != null)
+            {
+                _context.Warehouses.Remove(warehouse);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
