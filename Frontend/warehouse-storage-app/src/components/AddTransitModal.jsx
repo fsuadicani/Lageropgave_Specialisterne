@@ -3,43 +3,10 @@ import CitySelector from './CitySelector.jsx';
 import DataTable from './DataTable.jsx';
 import Modal from './Modal.jsx';
 import TransitQuantityModal from './TransitQuantityModal.jsx';
+import { transitGroups } from '../testdata/tableTestData.js';
 
 function AddTransitModal({ onClose }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const transitGroups = [
-    {
-      title: 'Start Warehouse',
-      items: [
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-        { name: 'Skruetrakker', productNumber: 'PRD-1001', fromStock: 42, toStock: 0 },
-        { name: 'Hammer', productNumber: 'PRD-1002', fromStock: 18, toStock: 0 },
-      ],
-    },
-    {
-      title: 'In Transit',
-      items: [
-        { name: 'Boremaskine', productNumber: 'PRD-1003', inStock: 7 },
-        { name: 'Sav', productNumber: 'PRD-1004', inStock: 11 },
-      ],
-    },
-  ];
   const startColumns = [
     { key: 'name', label: 'Name' },
     { key: 'productNumber', label: 'Product Number' },

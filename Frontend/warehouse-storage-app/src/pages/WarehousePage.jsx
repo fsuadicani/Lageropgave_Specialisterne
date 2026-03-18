@@ -4,15 +4,11 @@ import CitySelector from '../components/CitySelector.jsx';
 import DataTable from '../components/DataTable.jsx';
 import EditWarehouseModal from '../components/EditWarehouseModal.jsx';
 import '../css/ui.css';
+import { stocks } from '../testdata/tableTestData.js';
 
 function WarehousePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
-  const stocks = [
-    { name: 'Skruetrakker', inhouseLocation: 'A1-14', localPrice: '149.00', localCurrency: 'DKK', inStock: 42 },
-    { name: 'Hammer', inhouseLocation: 'B2-07', localPrice: '89.50', localCurrency: 'DKK', inStock: 18 },
-    { name: 'Boremaskine', inhouseLocation: 'C3-21', localPrice: '799.00', localCurrency: 'DKK', inStock: 7 },
-  ];
   const stockColumns = [
     { key: 'name', label: 'Name' },
     { key: 'inhouseLocation', label: 'Inhouse Location' },

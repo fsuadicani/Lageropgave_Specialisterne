@@ -9,7 +9,7 @@ function MenuLayout() {
           <NavLink to="/products">Products</NavLink>
           <NavLink to="/warehouses">Warehouses</NavLink>
           <NavLink to="/transits">Transits</NavLink>
-          <NavLink to="/employees">Manage Employees</NavLink>
+          <NavLink to="/employees">Admin</NavLink>
         </div>
         <div>
           <NavLink to="/login">Log Out</NavLink>

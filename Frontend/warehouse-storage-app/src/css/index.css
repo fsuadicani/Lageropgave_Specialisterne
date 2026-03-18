@@ -56,13 +56,12 @@ button:hover {
 }
 button:active {
   background-color: #535353;
-
 }
 
 button:focus,
 button:focus-visible {
   outline: 4px solid #646cff;
-  outline-offset: 2px;
+  outline-offset: 0px;
 }
 @media (prefers-color-scheme: light) {
   :root {

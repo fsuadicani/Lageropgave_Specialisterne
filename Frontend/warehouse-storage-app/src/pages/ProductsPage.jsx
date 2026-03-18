@@ -2,15 +2,11 @@ import { useState } from 'react';
 import AddProductModal from '../components/AddProductModal.jsx';
 import DataTable from '../components/DataTable.jsx';
 import '../css/ui.css';
+import { products } from '../testdata/tableTestData.js';
 
 function ProductsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const products = [
-    { name: 'Skruetrakker', number: 'PRD-1001', defaultPrice: '149.00', defaultCurrency: 'DKK' },
-    { name: 'Hammer', number: 'PRD-1002', defaultPrice: '89.50', defaultCurrency: 'DKK' },
-    { name: 'Boremaskine', number: 'PRD-1003', defaultPrice: '799.00', defaultCurrency: 'DKK' },
-  ];
   const productColumns = [
     { key: 'name', label: 'Name' },
     { key: 'number', label: 'Number' },
