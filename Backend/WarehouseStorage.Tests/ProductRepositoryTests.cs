@@ -4,7 +4,12 @@ namespace WarehouseStorage.Tests
 {   
     public class ProductRepositoryTests
     {
-        readonly ProductRepository _productRepository;
-
+        private readonly WarehouseDbContext _context;
+ 
+        
+        public ProductRepositoryTests(WarehouseDbContext context)
+        {
+            _context = context;
+        }
     }
 }
