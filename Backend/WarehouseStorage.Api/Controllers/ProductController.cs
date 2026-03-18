@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseStorage.Domain.Models;
+using WarehouseStorage.DTOs.DataTransferObjects;
 
 namespace WarehouseStorage.Api.Controllers
 {
@@ -9,6 +10,7 @@ namespace WarehouseStorage.Api.Controllers
     {
         private const int MaxTake = 1000;
         private readonly ProductRepository _productRepository = productRepository;
+        
 
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] Product product)
@@ -20,7 +22,15 @@ namespace WarehouseStorage.Api.Controllers
             try
             {
                 await _productRepository.Add(product);
-                return StatusCode(201, product);
+                ProductDTO productDTO = new()
+                {
+                    Id = product.Id,
+                    Name = product.Name.value,
+                    Number = product.Number.value,
+                    DefaultPrice = product.DefaultPrice.value,
+                    DefaultCurrency = product.DefaultCurrency.value
+                };
+                return StatusCode(201, productDTO);
             }
             catch (Exception)
             {
@@ -34,11 +44,19 @@ namespace WarehouseStorage.Api.Controllers
             try
             {
                 var product = await _productRepository.GetById(id);
+                ProductDTO productDTO = new()
+                {
+                    Id = product.Id,
+                    Name = product.Name.value,
+                    Number = product.Number.value,
+                    DefaultPrice = product.DefaultPrice.value,
+                    DefaultCurrency = product.DefaultCurrency.value
+                };
                 if (product == null)
                 {
                     return NotFound();
                 }
-                return Ok(product);
+                return Ok(productDTO);
             }
             catch (Exception)
             {
@@ -57,7 +75,15 @@ namespace WarehouseStorage.Api.Controllers
             try
             {
                 var products = await _productRepository.GetAll(skip, take);
-                return Ok(products);
+                var productDTOs = products.Select(product => new ProductDTO
+                {
+                    Id = product.Id,
+                    Name = product.Name.value,
+                    Number = product.Number.value,
+                    DefaultPrice = product.DefaultPrice.value,
+                    DefaultCurrency = product.DefaultCurrency.value
+                }).ToList();
+                return Ok(productDTOs);
             }
             catch (Exception e)
             {
@@ -85,7 +111,15 @@ namespace WarehouseStorage.Api.Controllers
                 }
 
                 await _productRepository.Update(product);
-                return Ok(product);
+                ProductDTO productDTO = new()
+                {
+                    Id = product.Id,
+                    Name = product.Name.value,
+                    Number = product.Number.value,
+                    DefaultPrice = product.DefaultPrice.value,
+                    DefaultCurrency = product.DefaultCurrency.value
+                };
+                return Ok(productDTO);
             }
             catch (Exception e)
             {
