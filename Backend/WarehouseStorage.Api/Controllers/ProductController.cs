@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.DTOs.DataTransferObjects;
+using WarehouseStorage.Services.Factories;
 
 namespace WarehouseStorage.Api.Controllers
 {
@@ -13,7 +15,7 @@ namespace WarehouseStorage.Api.Controllers
         
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] Product product)
+        public async Task<IActionResult> Add([FromBody] ProductDTO product)
         {
             if (product == null)
             {
@@ -21,15 +23,9 @@ namespace WarehouseStorage.Api.Controllers
             }
             try
             {
-                await _productRepository.Add(product);
-                ProductDTO productDTO = new()
-                {
-                    Id = product.Id,
-                    Name = product.Name.value,
-                    Number = product.Number.value,
-                    DefaultPrice = product.DefaultPrice.value,
-                    DefaultCurrency = product.DefaultCurrency.value
-                };
+                var createdProduct = ModelFactory.CreateProduct(product);
+                await _productRepository.Add(createdProduct);
+                ProductDTO productDTO = ModelFactory.CreateProductDTO(createdProduct);
                 return StatusCode(201, productDTO);
             }
             catch (Exception)
@@ -44,15 +40,12 @@ namespace WarehouseStorage.Api.Controllers
             try
             {
                 var product = await _productRepository.GetById(id);
-                ProductDTO productDTO = new()
-                {
-                    Id = product.Id,
-                    Name = product.Name.value,
-                    Number = product.Number.value,
-                    DefaultPrice = product.DefaultPrice.value,
-                    DefaultCurrency = product.DefaultCurrency.value
-                };
                 if (product == null)
+                {
+                    return NotFound();
+                }       
+                ProductDTO productDTO = ModelFactory.CreateProductDTO(product);
+                if (productDTO == null)
                 {
                     return NotFound();
                 }
@@ -75,14 +68,7 @@ namespace WarehouseStorage.Api.Controllers
             try
             {
                 var products = await _productRepository.GetAll(skip, take);
-                var productDTOs = products.Select(product => new ProductDTO
-                {
-                    Id = product.Id,
-                    Name = product.Name.value,
-                    Number = product.Number.value,
-                    DefaultPrice = product.DefaultPrice.value,
-                    DefaultCurrency = product.DefaultCurrency.value
-                }).ToList();
+                var productDTOs = products.Select(product => ModelFactory.CreateProductDTO(product)).ToList();
                 return Ok(productDTOs);
             }
             catch (Exception e)
@@ -93,7 +79,7 @@ namespace WarehouseStorage.Api.Controllers
 
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] Product product)
+        public async Task<IActionResult> Update([FromBody] ProductDTO product)
         {
             if (product == null || !product.Id.HasValue || product.Id.Value == Guid.Empty)
             {
@@ -110,15 +96,13 @@ namespace WarehouseStorage.Api.Controllers
                     return NotFound();
                 }
 
-                await _productRepository.Update(product);
-                ProductDTO productDTO = new()
+                var updatedProduct = ModelFactory.CreateProduct(product);
+                await _productRepository.Update(updatedProduct);
+                ProductDTO productDTO = ModelFactory.CreateProductDTO(updatedProduct);
+                if (productDTO == null)
                 {
-                    Id = product.Id,
-                    Name = product.Name.value,
-                    Number = product.Number.value,
-                    DefaultPrice = product.DefaultPrice.value,
-                    DefaultCurrency = product.DefaultCurrency.value
-                };
+                    return NotFound();
+                }
                 return Ok(productDTO);
             }
             catch (Exception e)
