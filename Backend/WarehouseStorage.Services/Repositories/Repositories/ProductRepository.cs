@@ -37,6 +37,10 @@ namespace WarehouseStorage.Services.Repositories.Repositories
 
         public async Task Update(Product product)
         {
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
             if (product.Id == Guid.Empty)
             {
                 throw new ArgumentException("Product ID cannot be empty for update.");

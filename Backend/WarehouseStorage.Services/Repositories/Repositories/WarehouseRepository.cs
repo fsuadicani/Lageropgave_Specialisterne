@@ -20,11 +20,12 @@ namespace WarehouseStorage.Services.Repositories.Repositories
 
         public async Task<Warehouse[]> GetAll(int skip = 0, int take = 100)
         {
-        return await _context.Warehouses
-                .AsNoTracking()
-                .Skip(skip)
-                .Take(take)
-                .ToArrayAsync();
+            return await _context.Warehouses
+            .AsNoTracking()
+            .OrderBy(w => w.Id)
+            .Skip(skip)
+            .Take(take)
+            .ToArrayAsync();
         }
 
         public async Task<Warehouse> Add(Warehouse warehouse)

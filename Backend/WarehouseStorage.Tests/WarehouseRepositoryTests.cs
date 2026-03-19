@@ -1,5 +1,6 @@
 using Bogus;
 using Microsoft.EntityFrameworkCore;
+using WarehouseStorage.Domain.DomainPrimitives;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.Services.Repositories.Repositories;
 
@@ -15,12 +16,26 @@ namespace WarehouseStorage.Tests
             return new WarehouseDbContext(options);
         }
 
-        private static Warehouse GenerateFakeWarehouse()
+       private static Warehouse GenerateFakeWarehouse()
         {
             var faker = new Faker();
-            return new Warehouse(  
+            var address = new Address(
+                new City(faker.Address.City()),
+                new StreetName(faker.Address.StreetName()),
+                new StreetNumber(faker.Address.BuildingNumber()),
+                new ZipCode(faker.Address.ZipCode().Replace("-", "")),
                 Guid.NewGuid()
             );
+            var location = new Location
+            {
+                Address = address,
+                Stocks = new List<Stock?>()
+            };
+            var warehouse = new Warehouse(Guid.NewGuid())
+            {
+                Location = location
+            };
+            return warehouse;
         }
 
 
@@ -28,7 +43,7 @@ namespace WarehouseStorage.Tests
         public async Task AddWarehouse_Should_Save_And_Retrieve_Warehouse()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new WarehouseRepository(context);
             var warehouse = GenerateFakeWarehouse();
 
@@ -46,9 +61,26 @@ namespace WarehouseStorage.Tests
         public async Task UpdateWarehouse_Should_Modify_Existing_Warehouse()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new WarehouseRepository(context);
             var warehouse = GenerateFakeWarehouse();
+            await repo.Add(warehouse);
+
+            // Act
+            var newCity = new City("Updated City");
+            warehouse.Location.Address = new Address(
+                newCity,
+                warehouse.Location.Address.Street,
+                warehouse.Location.Address.StreetNumber,
+                warehouse.Location.Address.ZipCode,
+                warehouse.Location.Address.Id
+            );
+            await repo.Update(warehouse);
+            var updated = await repo.GetById(warehouse.Id.Value);
+
+            // Assert
+            Assert.NotNull(updated);
+            Assert.Equal("Updated City", updated.Location.Address.City.value);
         }
 
 
@@ -56,7 +88,7 @@ namespace WarehouseStorage.Tests
         public async Task GetAllWarehouses_Should_Return_Correct_Number_Of_Warehouses()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new WarehouseRepository(context);
             for (int i = 0; i < 5; i++)
             {
@@ -75,7 +107,7 @@ namespace WarehouseStorage.Tests
         public async Task DeleteWarehouse_Should_Remove_Warehouse()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new WarehouseRepository(context);
             var warehouse = GenerateFakeWarehouse();
 

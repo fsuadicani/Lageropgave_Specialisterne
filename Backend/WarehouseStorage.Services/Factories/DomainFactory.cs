@@ -52,7 +52,7 @@ namespace WarehouseStorage.Services.Factories
 
         public static string CreateProductName(ProductName name)
         {
-            throw new NotImplementedException();
+            return name.value;
         }
 
         public static ProductNumber CreateProductNumber(string productnumber)
