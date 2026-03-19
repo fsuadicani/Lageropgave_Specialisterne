@@ -11,6 +11,10 @@ namespace WarehouseStorage.Services.Repositories.Repositories
 
         public ProductRepository(WarehouseDbContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             _context = context;
         }
 
@@ -23,6 +27,7 @@ namespace WarehouseStorage.Services.Repositories.Repositories
         {
             return await _context.Products
                 .AsNoTracking()
+                .OrderBy(p => p.Id)
                 .Skip(skip)
                 .Take(take)
                 .ToArrayAsync();
