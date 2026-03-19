@@ -6,10 +6,8 @@ using WarehouseStorage.Domain.Models;
 
 namespace WarehouseStorage.Services.Repositories.Interfaces
 {
-    public interface ITransitRepository
+    public interface ILocationRepository
     {
-        Task<Transit> CreateAsync(Transit transit);
-        Task UpdateAsync(Transit transit);
-        Transit? Get(Guid transitId);
+        Location GetLocationWithStock(Guid id);
     }
 }

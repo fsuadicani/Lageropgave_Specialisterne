@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.Services.Repositories.Interfaces;
 
@@ -29,6 +30,14 @@ namespace WarehouseStorage.Services.Repositories
             }
             _context.Update(transit);
             await _context.SaveChangesAsync();
+        }
+
+        public Transit? Get(Guid transitId)
+        {
+            return _context.Transits
+                .Include(transit => transit.Location)
+                    .ThenInclude(location => location.Stocks)
+                .FirstOrDefault(transit => transit.Id == transitId);
         }
     }
 }

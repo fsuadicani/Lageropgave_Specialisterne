@@ -9,5 +9,7 @@ namespace WarehouseStorage.Services.Interfaces
     public interface ITransitService
     {
         Task StartTransitToDestination(Transit transit);
+
+        Task TransitHasArrived(Guid transitID);
     }
 }

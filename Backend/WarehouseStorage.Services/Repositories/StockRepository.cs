@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WarehouseStorage.Domain.Models;
 using WarehouseStorage.Services.Repositories.Interfaces;
 
@@ -31,12 +32,17 @@ namespace WarehouseStorage.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Stock>> GetSameStocksFromLocationAsync(IEnumerable<Stock> stocks, Guid locationId)
+        public IEnumerable<Stock> GetSameStocksFromLocation(IEnumerable<Stock> stocks, Guid? locationId)
         {
+            var productIds = stocks
+                .Select(s => s.ProductId)
+                .ToList();
+
             return _context.Stocks
                 .Where(stock => stock.LocationId == locationId)
-                .Where(stock => stocks.Any(transitStock => transitStock.Product.Id == stock.Product.Id))
+                .Where(stock => productIds.Contains(stock.ProductId))
                 .ToList();
         }
+
     }
 }

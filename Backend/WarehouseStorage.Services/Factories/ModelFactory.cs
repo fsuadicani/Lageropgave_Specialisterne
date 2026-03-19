@@ -71,9 +71,11 @@ namespace WarehouseStorage.Services.Factories
                 deliveryStatus,
                 transitId)
             {
+                DestinationId = transit.DestinationId,
                 Location = new Location()
                 {
-                    Address = null
+                    Address = null,
+                    Stocks = new List<Stock>()
                 }
             };
         }
@@ -90,7 +92,22 @@ namespace WarehouseStorage.Services.Factories
                 DomainFactory.CreateQuantity(stock.Quantity),
                 DomainFactory.CreatePrice(localPrice),
                 DomainFactory.CreateCurrency(localCurrency),
-                stockId);
+                stockId)
+            {
+                ProductId = stock.ProductId
+            };
+        }
+
+        public static StockDTO CreateStockDTO(Stock stock)
+        {
+            return new StockDTO
+            {
+                InHouseLocation = stock.InHouseLocation.value,
+                Quantity = stock.Quantity.value,
+                LocalPrice = stock.LocalPrice.value,
+                LocalCurrency = stock.LocalCurrency.value,
+                ProductId = stock.ProductId
+            };
         }
 
         public static Warehouse CreateWarehouse(WarehouseDTO warehouse)

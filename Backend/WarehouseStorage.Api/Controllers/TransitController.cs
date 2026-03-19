@@ -32,7 +32,7 @@ namespace WarehouseStorage.Api.Controllers
                 foreach (StockDTO stockDTO in request.Stocks)
                 {
                     Stock stock = ModelFactory.CreateStock(stockDTO);
-                    transit.Location.Stocks.Append(stock);
+                    transit.Location.Stocks.Add(stock);
                 }
                 await _transitService.StartTransitToDestination(transit);
                 
@@ -43,6 +43,22 @@ namespace WarehouseStorage.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> TransitArrived([FromQuery] Guid id)
+        {
+            try
+            {
+                await _transitService.TransitHasArrived(id);
+                
+                return Accepted();
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
     }
 }

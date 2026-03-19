@@ -10,6 +10,6 @@ namespace WarehouseStorage.Services.Repositories.Interfaces
     {
         Task<Stock> CreateAsync(Stock stock);
         Task UpdateAsync(Stock stock);
-        Task<IEnumerable<Stock>> GetSameStocksFromLocationAsync(IEnumerable<Stock> stocks, Guid locationId);
+        IEnumerable<Stock> GetSameStocksFromLocation(IEnumerable<Stock> stocks, Guid? locationId);
     }
 }

@@ -11,7 +11,7 @@ namespace WarehouseStorage.Domain.Models
 
         // public Guid ReferenceId { get; private set; }
 
-        public IEnumerable<Stock?> Stocks { get; set; }
+        public IList<Stock?> Stocks { get; set; }
 
         public Address? Address { get; set; }
     }
