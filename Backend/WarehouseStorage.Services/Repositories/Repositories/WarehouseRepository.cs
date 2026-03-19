@@ -53,11 +53,12 @@ namespace WarehouseStorage.Services.Repositories.Repositories
         public async Task Delete(Guid id)
         {
             var warehouse = await _context.Warehouses.FindAsync(id);
-            if (warehouse != null)
+            if (warehouse == null)
             {
-                _context.Warehouses.Remove(warehouse);
-                await _context.SaveChangesAsync();
+                throw new KeyNotFoundException($"Warehouse with id '{id}' not found");
             }
+            _context.Warehouses.Remove(warehouse);
+            await _context.SaveChangesAsync();
         }
     }
 }

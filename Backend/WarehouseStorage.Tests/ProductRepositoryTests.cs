@@ -34,7 +34,7 @@ namespace WarehouseStorage.Tests
         public async Task AddProduct_Should_Save_And_Retrieve_Product()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new ProductRepository(context);
             var product = GenerateFakeProduct();
 
@@ -54,7 +54,7 @@ namespace WarehouseStorage.Tests
         public async Task UpdateProduct_Should_Modify_Existing_Product()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new ProductRepository(context);
             var product = GenerateFakeProduct();
             await repo.Add(product);
@@ -74,7 +74,7 @@ namespace WarehouseStorage.Tests
         public async Task GetAll_Should_Return_All_Products()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new ProductRepository(context);
             var products = Enumerable.Range(0, 5).Select(_ => GenerateFakeProduct()).ToArray();
             foreach (var product in products)
@@ -93,7 +93,7 @@ namespace WarehouseStorage.Tests
         public async Task Delete_Should_Remove_Product()
         {
             // Arrange
-            var context = CreateInMemoryDbContext();
+            using var context = CreateInMemoryDbContext();
             var repo = new ProductRepository(context);
             var product = GenerateFakeProduct();
             await repo.Add(product);
