@@ -12,6 +12,8 @@ public class WarehouseDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<Location> Locations => Set<Location>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder); // IMPORTANT

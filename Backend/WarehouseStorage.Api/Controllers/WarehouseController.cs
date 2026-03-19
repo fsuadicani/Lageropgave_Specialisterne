@@ -26,10 +26,10 @@ namespace WarehouseStorage.Api.Controllers
                 WarehouseDTO warehouseDTO = ModelFactory.CreateWarehouseDTO(createdWarehouse);
                 return StatusCode(201, warehouseDTO);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Log the exception here: _logger.LogError(e, "Failed to add warehouse");
-                return StatusCode(500, "Internal server error occurred while adding the warehouse.");
+                return StatusCode(500, $"Internal server error occurred while adding the warehouse. {e.Message}");
             }
         }
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WarehouseStorage.Infrastructure;
 using WarehouseStorage.Services.Repositories;
+using WarehouseStorage.Services.Repositories.Interfaces;
 using WarehouseStorage.Services.Security;
 using WarehouseStorage.Services.Security.Interfaces;
 
@@ -21,6 +22,9 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+
 
         return services;
     }
