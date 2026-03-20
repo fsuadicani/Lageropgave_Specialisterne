@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { authFetch } from '../auth.js';
 
 const WAREHOUSES_ENDPOINT = '/api/warehouse/filter?take=1000';
 
@@ -20,7 +21,7 @@ function WarehouseSelector({
 
     const loadWarehouses = async () => {
       try {
-        const response = await fetch(WAREHOUSES_ENDPOINT, {
+        const response = await authFetch(WAREHOUSES_ENDPOINT, {
           signal: abortController.signal,
         });
 

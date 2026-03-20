@@ -29,10 +29,10 @@ namespace WarehouseStorage.Api.Controllers
                 ProductDTO productDTO = ModelFactory.CreateProductDTO(createdProduct);
                 return StatusCode(201, productDTO);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Log the exception here: _logger.LogError(e, "Failed to add product");
-                return StatusCode(500, "Internal server error occurred while adding the product.");
+                return StatusCode(500, e.Message);
             }        }
 
         [HttpGet("{id}")]

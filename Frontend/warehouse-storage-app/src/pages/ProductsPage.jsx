@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import AddProductModal from '../components/AddProductModal.jsx';
 import DataTable from '../components/DataTable.jsx';
+import { authFetch } from '../auth.js';
 import '../css/ui.css';
 
 const PRODUCTS_ENDPOINT = '/api/product/filter?take=1000';
@@ -72,7 +73,7 @@ function ProductsPage() {
       setProductLoadError('');
 
       try {
-        const response = await fetch(PRODUCTS_ENDPOINT, {
+        const response = await authFetch(PRODUCTS_ENDPOINT, {
           signal: abortController.signal,
         });
 
@@ -114,7 +115,7 @@ function ProductsPage() {
   }, []);
 
   const handleCreateProduct = async (formValues) => {
-    const response = await fetch(CREATE_PRODUCT_ENDPOINT, {
+    const response = await authFetch(CREATE_PRODUCT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +136,7 @@ function ProductsPage() {
   };
 
   const handleDeleteProduct = async (productToDelete) => {
-    const response = await fetch(`/api/product/delete/${productToDelete.id}`, {
+    const response = await authFetch(`/api/product/delete/${productToDelete.id}`, {
       method: 'DELETE',
     });
 
@@ -154,7 +155,7 @@ function ProductsPage() {
   };
 
   const handleDuplicateProduct = async (productToDuplicate) => {
-    const response = await fetch(CREATE_PRODUCT_ENDPOINT, {
+    const response = await authFetch(CREATE_PRODUCT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -176,7 +177,7 @@ function ProductsPage() {
 
   const handleUpdateProduct = async (formValues) => {
     const originalProduct = selectedProduct;
-    const createResponse = await fetch(CREATE_PRODUCT_ENDPOINT, {
+    const createResponse = await authFetch(CREATE_PRODUCT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -191,13 +192,13 @@ function ProductsPage() {
     }
 
     const recreatedProduct = normalizeProduct(await createResponse.json());
-    const deleteResponse = await fetch(`/api/product/delete/${originalProduct.id}`, {
+    const deleteResponse = await authFetch(`/api/product/delete/${originalProduct.id}`, {
       method: 'DELETE',
     });
 
     if (!deleteResponse.ok) {
       try {
-        await fetch(`/api/product/delete/${recreatedProduct.id}`, {
+        await authFetch(`/api/product/delete/${recreatedProduct.id}`, {
           method: 'DELETE',
         });
       } catch {

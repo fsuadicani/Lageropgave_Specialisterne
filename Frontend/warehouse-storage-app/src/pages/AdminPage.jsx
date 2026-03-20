@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AddEmployeeModal from '../components/AddEmployeeModal.jsx';
 import AddWarehouseModal from '../components/AddWarehouseModal.jsx';
 import DataTable from '../components/DataTable.jsx';
+import { authFetch } from '../auth.js';
 import '../css/ui.css';
 import { employees } from '../testdata/tableTestData.js';
 
@@ -66,7 +67,7 @@ function AdminPage() {
       setWarehouseLoadError('');
 
       try {
-        const response = await fetch(WAREHOUSES_ENDPOINT, {
+        const response = await authFetch(WAREHOUSES_ENDPOINT, {
           signal: abortController.signal,
         });
 
@@ -108,7 +109,7 @@ function AdminPage() {
   }, []);
 
   const handleCreateWarehouse = async (formValues) => {
-    const response = await fetch(CREATE_WAREHOUSE_ENDPOINT, {
+    const response = await authFetch(CREATE_WAREHOUSE_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ function AdminPage() {
   const handleUpdateWarehouse = async (formValues) => {
     const originalWarehouse = selectedWarehouse;
 
-    const createResponse = await fetch(CREATE_WAREHOUSE_ENDPOINT, {
+    const createResponse = await authFetch(CREATE_WAREHOUSE_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -146,13 +147,13 @@ function AdminPage() {
     }
 
     const recreatedWarehouse = await createResponse.json();
-    const deleteResponse = await fetch(`/api/warehouse/${originalWarehouse.id}`, {
+    const deleteResponse = await authFetch(`/api/warehouse/${originalWarehouse.id}`, {
       method: 'DELETE',
     });
 
     if (!deleteResponse.ok) {
       try {
-        await fetch(`/api/warehouse/${recreatedWarehouse.id}`, {
+        await authFetch(`/api/warehouse/${recreatedWarehouse.id}`, {
           method: 'DELETE',
         });
       } catch {
@@ -171,7 +172,7 @@ function AdminPage() {
   };
 
   const handleDeleteWarehouse = async (warehouseToDelete) => {
-    const response = await fetch(`/api/warehouse/${warehouseToDelete.id}`, {
+    const response = await authFetch(`/api/warehouse/${warehouseToDelete.id}`, {
       method: 'DELETE',
     });
 

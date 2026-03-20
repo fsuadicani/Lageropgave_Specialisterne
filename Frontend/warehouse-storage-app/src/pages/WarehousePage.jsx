@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import AddTransitModal from '../components/AddTransitModal.jsx';
 import DataTable from '../components/DataTable.jsx';
 import EditWarehouseModal from '../components/EditWarehouseModal.jsx';
+import { authFetch } from '../auth.js';
 import '../css/ui.css';
 import { stocks } from '../testdata/tableTestData.js';
 import WarehouseSelector from '../components/WarehouseSelector.jsx';
@@ -25,7 +26,7 @@ function WarehousePage() {
 
     const loadWarehouses = async () => {
       try {
-        const response = await fetch(WAREHOUSES_ENDPOINT, {
+        const response = await authFetch(WAREHOUSES_ENDPOINT, {
           signal: abortController.signal,
         });
 

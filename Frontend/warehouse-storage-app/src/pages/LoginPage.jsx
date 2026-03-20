@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getStoredSession, persistSession } from '../auth.js';
 
 
 function LoginPage({ onLogin }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const DEV_ONLY_LOGIN_ENABLED = import.meta.env.DEV && import.meta.env.VITE_DEV_LOGIN_ENABLED === 'true';
+
+  useEffect(() => {
+    if (getStoredSession()) {
+      navigate('/products', { replace: true });
+    }
+  }, [navigate]);
 
   const createLabeledError = (name, message) => {
     const error = new Error(message);
@@ -61,14 +70,6 @@ function LoginPage({ onLogin }) {
     );
   };
 
-  const persistSession = (session) => {
-    const storage = remember ? localStorage : sessionStorage;
-    const alternateStorage = remember ? sessionStorage : localStorage;
-
-    alternateStorage.removeItem('warehouseAuth');
-    storage.setItem('warehouseAuth', JSON.stringify(session));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -89,13 +90,13 @@ function LoginPage({ onLogin }) {
           loggedInAt: new Date().toISOString(),
         };
 
-        persistSession(session);
+        persistSession(session, remember);
 
         if (typeof onLogin === 'function') {
           onLogin(session);
         }
 
-        window.location.hash = '#/home';
+        navigate('/products', { replace: true });
         return;
       }
 
@@ -138,13 +139,13 @@ function LoginPage({ onLogin }) {
       setErrorMessage('');
       setIsAuthenticated(true);
 
-      persistSession(session);
+      persistSession(session, remember);
 
       if (typeof onLogin === 'function') {
         onLogin(session);
       }
 
-      window.location.hash = '#/home';
+      navigate('/products', { replace: true });
     } catch (error) {
       setIsAuthenticated(false);
 
@@ -163,7 +164,7 @@ function LoginPage({ onLogin }) {
   };
 
   return (
-    <browserRouter>
+    <>
       <div className="header-container">
         <h1></h1>
       </div>
@@ -237,7 +238,7 @@ function LoginPage({ onLogin }) {
         </div>
       </div>
 
-    </browserRouter>
+    </>
   );
 }
 
