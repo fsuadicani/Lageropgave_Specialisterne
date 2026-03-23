@@ -1,10 +1,16 @@
+import { useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { clearSession } from '../auth.js';
+
 function LogoutPage() {
-  return (
-    <div>
-      <h1>Log Out</h1>
-      <p>You are now on the logout page.</p>
-    </div>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    clearSession();
+    navigate('/login', { replace: true });
+  }, [navigate]);
+
+  return <Navigate replace to="/login" />;
 }
 
 export default LogoutPage;

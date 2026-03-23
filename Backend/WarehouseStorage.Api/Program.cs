@@ -7,12 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using WarehouseStorage.Domain.Enums;
 using WarehouseStorage.Domain.Models;
+using WarehouseStorage.Infrastructure;
 using WarehouseStorage.Services;
 using WarehouseStorage.Services.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddUserSecrets<Program>();
+builder.Configuration.AddUserSecrets<UserSecretsAssemblyMarker>(optional: true);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
